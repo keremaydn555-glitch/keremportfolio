@@ -59,7 +59,7 @@
   }
 
   /* ---------- şablonlar ---------- */
-  var CAPTIONS = { 'hill-villas': 'HILL / KALKAN', 'second-brain': 'PERSONAL SYSTEM', 'history-brush': 'PHOTOSHOP / STUDY', 'kara-kalem': 'INK / COLOR', 'smart-object': 'SMART OBJECT' }
+  var CAPTIONS = { 'second-brain': 'PERSONAL SYSTEM', 'history-brush': 'PHOTOSHOP / STUDY', 'kara-kalem': 'INK / COLOR', 'smart-object': 'SMART OBJECT' }
   function projectCard(p, i) {
     var kinds = T.projectKinds || {}
     return '<article class="project-card"><a class="project-art art-' + esc(p.visual) + '" href="projects.html" aria-label="' + esc(p.title[LANG]) + '">' +
@@ -162,6 +162,19 @@
   $$('[data-render]').forEach(function (el) { var fn = renderers[el.getAttribute('data-render')]; if (fn) fn(el) })
 
 
+
+  /* ---------- CMS: sayfa metinleri ve eklentiler (seed.js'ten) ---------- */
+  var SEED = window.SEED_DATA || {}
+  ;(SEED.pageTexts || []).forEach(function (o) {
+    if (o.page !== PAGE || o.lang !== LANG || !o.text) return
+    var el = document.querySelector(o.selector)
+    if (el) el.innerHTML = esc(o.text).replace(/\n/g, '<br>')
+  })
+  var PLUG = SEED.plugins || {}
+  ;[['home_gallery', '.gallery-home'], ['contact_form', '#contact-form'], ['contact_map', '.map-frame'], ['social_links', '.social-links']].forEach(function (p) {
+    if (PLUG[p[0]] === false) $$(p[1]).forEach(function (el) { el.classList.add('is-hidden') })
+  })
+
   /* ---------- iletişim ayarları (CMS > Ayarlar) ---------- */
   var settings = Object.assign({}, (window.SEED_DATA || {}).settings || {})
   function telHref(v) { var d = String(v).replace(/[^\d+]/g, ''); if (d.charAt(0) === '+') return d; if (d.indexOf('90') === 0 && d.length >= 12) return '+' + d; return '+90' + d.replace(/^0/, '') }
@@ -181,6 +194,9 @@
       .then(function (rows) { rows.forEach(function (r) { settings[r.key] = r.value }); applySettings() })
       .catch(function () { applySettings() })
   } else applySettings()
+
+  // Admin sekmesi: KA-CMS bu bilgisayarda çalışıyorsa yerel panele, değilse sitenin /admin/ sayfasına gider
+  if (CFG.LOCAL_CMS) $$('[data-admin-link]').forEach(function (a) { a.setAttribute('href', '/cms/') })
 
   /* ---------- menü, dil bağlantısı ---------- */
   var toggle = $('#menu-toggle'), nav = $('#main-nav')
@@ -231,7 +247,9 @@
         method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({ name: d.name, email: d.email, subject: d.subject, message: d.message, _subject: 'Siteden yeni mesaj: ' + d.subject, _replyto: d.email, _template: 'table', _captcha: 'false' }),
       }).then(function (r) { return r.json().catch(function () { return {} }).then(function (j) { if (!r.ok || j.success === 'false' || j.success === false) throw new Error('mail'); return true }) }))
-      // 2) Veritabanı (admin panelindeki "Mesajlar")
+      // 2a) Yerel CMS (bilgisayarında KA-CMS çalışıyorsa "Mesajlar" bölümüne düşer)
+      if (CFG.LOCAL_CMS) jobs.push(fetch('/cms/api/message', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: d.name, email: d.email, subject: d.subject, message: d.message }) }).then(function (r) { if (!r.ok) throw new Error('cms'); return true }))
+      // 2b) Veritabanı (Supabase panelindeki "Mesajlar")
       if (HAS_DB) jobs.push(fetch(CFG.SUPABASE_URL.replace(/\/$/, '') + '/rest/v1/messages', {
         method: 'POST', headers: dbHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
         body: JSON.stringify({ name: d.name, email: d.email, subject: d.subject, message: d.message }),

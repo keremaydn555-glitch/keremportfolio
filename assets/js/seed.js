@@ -80,26 +80,6 @@ window.SEED_DATA = {
     "Kişisel iş akışı"
    ],
    "visual": "notes"
-  },
-  {
-   "logo": "assets/images/projects/hill-villas-logo.png",
-   "image": "",
-   "id": "hill-villas",
-   "title": {
-    "tr": "Hill Villas Kalkan — Sosyal Medya",
-    "en": "Hill Villas Kalkan — Social Media"
-   },
-   "description": {
-    "tr": "Lüks villa markası için Instagram gönderileri ve Story tasarımları. Altın detaylar ve gece mavisi tonlarıyla markanın sakin lüksünü yansıtan görsel dil.",
-    "en": "Instagram posts and Story designs for a luxury villa brand, using gold details and midnight blues to express its quiet luxury."
-   },
-   "category": "design",
-   "tags": [
-    "Photoshop",
-    "Instagram",
-    "Art direction"
-   ],
-   "visual": "villa"
   }
  ],
  "gallery": [
@@ -402,6 +382,8 @@ window.SEED_DATA = {
   }
  ],
  "settings": {
+  "band_tr": "Kişisel illüstrasyon, fotoğraf düzenleme ve web projeleri üzerinde çalışıyorum.",
+  "band_en": "Working on personal illustration, photo editing and web projects.",
   "phone": "0543 498 25 11",
   "email": "kerem.aydn555@gmail.com",
   "address": "Antalya, Türkiye",

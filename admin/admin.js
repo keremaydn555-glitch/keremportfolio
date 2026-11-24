@@ -39,14 +39,14 @@
   if (!CFG.SUPABASE_URL || !CFG.SUPABASE_ANON_KEY || !window.supabase) {
     app.innerHTML = ''
     app.appendChild(h('main', { class: 'adm-setup' }, h('div', { class: 'adm-card' },
-      h('p', { class: 'adm-eyebrow' }, 'KEREM AYDIN · CMS'), h('h1', {}, 'Veritabanı bağlı değil'),
-      h('p', {}, 'Yönetim paneli Supabase veritabanı ister. Kurulum (yaklaşık 10 dakika):'),
-      h('ol', {},
-        h('li', {}, 'supabase.com’da ücretsiz bir proje aç.'),
-        h('li', {}, 'SQL Editor’a ', h('code', {}, 'supabase-kurulum.sql'), ' içeriğini yapıştırıp çalıştır.'),
-        h('li', {}, 'Authentication > Users’tan kendi e-posta + şifrenle bir kullanıcı ekle.'),
-        h('li', {}, h('code', {}, 'assets/js/config.js'), ' içine Project URL ve anon key değerlerini yaz.')),
-      h('p', { class: 'adm-hint' }, 'Ayrıntılı anlatım: VERITABANI-KURULUM.md'))))
+      h('p', { class: 'adm-eyebrow' }, 'KEREM AYDIN · YÖNETİM'), h('h1', {}, 'Yönetim paneli'),
+      h('p', {}, 'Bu sitenin içeriği iki yoldan yönetilebilir:'),
+      h('h3', { style: 'margin:16px 0 4px' }, '1) KA-CMS (bilgisayarında çalışır)'),
+      h('ol', {}, h('li', {}, 'Proje klasöründeki ', h('code', {}, 'BASLAT.bat'), ' dosyasına çift tıkla.'), h('li', {}, 'Açılan sayfada e-posta ve şifrenle giriş yap.'), h('li', {}, 'Değişiklikleri kaydedip proje klasörünün içindekileri GitHub’a yükle.')),
+      h('p', {}, h('a', { class: 'adm-btn primary', href: 'http://localhost:3000/cms/' }, 'Yerel KA-CMS’i aç')),
+      h('p', { class: 'adm-hint' }, 'Bu düğme sadece KA-CMS senin bilgisayarında çalışırken açılır.'),
+      h('h3', { style: 'margin:20px 0 4px' }, '2) Supabase (internet üzerinden giriş)'),
+      h('p', { class: 'adm-hint' }, 'config.js içine Supabase adresi ve anahtarı yazılırsa bu sayfada e-posta ve şifreyle giriş ekranı açılır. Rehber: VERITABANI-KURULUM.md'))))
     return
   }
 
@@ -54,19 +54,30 @@
   var S = { tab: 'posts', sel: { posts: 0, projects: 0, gallery: 0 }, data: { posts: [], projects: [], gallery: [], messages: [], settings: {} }, media: [], dirty: false }
 
   /* ---------- giriş ---------- */
+  function friendlyAuthError(e) {
+    var m = String((e && e.message) || e || ''), c = (e && (e.code || e.error_code)) || ''
+    if (c === 'invalid_credentials' || /invalid login credentials/i.test(m)) return 'E-posta veya şifre yanlış. (Supabase bu kullanıcıyı ya da şifreyi tanımıyor.)'
+    if (/not confirmed/i.test(m) || c === 'email_not_confirmed') return 'E-posta onaylanmamış. Supabase > Authentication > Users’ta kullanıcıyı oluştururken “Auto Confirm User” işaretli olmalı.'
+    if (/disabled/i.test(m) || c === 'email_provider_disabled') return 'Supabase’te e-posta girişi kapalı. Authentication > Sign In / Providers > Email açık (Enabled) olmalı. Sadece “Allow new users to sign up” kapatılır. [' + m + ']'
+    if (/api key|apikey|jwt/i.test(m)) return 'API anahtarı reddedildi. config.js içindeki SUPABASE_ANON_KEY yanlış olabilir. [' + m + ']'
+    if (/fetch|network|failed/i.test(m)) return 'Supabase’e ulaşılamadı. İnternet bağlantını ve config.js içindeki SUPABASE_URL’yi kontrol et. [' + m + ']'
+    return 'Giriş hatası: ' + m + (c ? ' [' + c + ']' : '') + (e && e.status ? ' (HTTP ' + e.status + ')' : '')
+  }
   function loginView(msg) {
     app.innerHTML = ''
     var err = h('p', { class: 'adm-error', role: 'alert' }, msg || '')
+    var pw = h('input', { name: 'password', type: 'password', required: true, autocomplete: 'current-password' })
+    var show = h('button', { type: 'button', class: 'adm-link', style: 'background:none;border:0;cursor:pointer;text-align:left;padding:0', onclick: function () { pw.type = pw.type === 'password' ? 'text' : 'password'; show.textContent = pw.type === 'password' ? 'Şifreyi göster' : 'Şifreyi gizle' } }, 'Şifreyi göster')
     var form = h('form', { class: 'adm-card', onsubmit: function (e) {
       e.preventDefault()
       var fd = new FormData(form)
       btn.disabled = true; err.textContent = ''
-      sb.auth.signInWithPassword({ email: String(fd.get('email')).trim(), password: String(fd.get('password')) }).then(function (r) {
-        if (r.error) { err.textContent = 'E-posta veya şifre yanlış.'; btn.disabled = false } else start()
-      })
+      sb.auth.signInWithPassword({ email: String(fd.get('email')).trim().toLowerCase(), password: String(fd.get('password')) }).then(function (r) {
+        if (r.error) { err.textContent = friendlyAuthError(r.error); btn.disabled = false } else start()
+      }).catch(function (ex) { err.textContent = friendlyAuthError(ex); btn.disabled = false })
     } }, h('p', { class: 'adm-eyebrow' }, 'KEREM AYDIN · CMS'), h('h1', {}, 'Yönetim paneli'),
       h('label', {}, 'E-posta', h('input', { name: 'email', type: 'email', required: true, autocomplete: 'username' })),
-      h('label', {}, 'Şifre', h('input', { name: 'password', type: 'password', required: true, autocomplete: 'current-password' })), err)
+      h('label', {}, 'Şifre', pw), show, err)
     var btn = h('button', { class: 'adm-btn primary' }, 'Giriş yap')
     form.appendChild(btn); form.appendChild(h('a', { class: 'adm-link', href: '../tr/index.html' }, '← Siteye dön'))
     app.appendChild(h('main', { class: 'adm-login' }, form))
@@ -277,13 +288,13 @@
   }
 
 
-  var SETTING_FIELDS = [['phone', 'Telefon', 'text'], ['email', 'E-posta (iletişim formu bu adrese gelir)', 'email'], ['address', 'Adres', 'text'], ['instagram', 'Instagram bağlantısı (https://...)', 'url'], ['linkedin', 'LinkedIn bağlantısı (https://...)', 'url'], ['github', 'GitHub bağlantısı (https://...)', 'url']]
+  var SETTING_FIELDS = [['band_tr', 'Hakkımda sayfası — “Şu sıralar” cümlesi (Türkçe)', 'text'], ['band_en', 'About page — “Currently” sentence (English)', 'text'], ['phone', 'Telefon', 'text'], ['email', 'E-posta (iletişim formu bu adrese gelir)', 'email'], ['address', 'Adres', 'text'], ['instagram', 'Instagram bağlantısı (https://...)', 'url'], ['linkedin', 'LinkedIn bağlantısı (https://...)', 'url'], ['github', 'GitHub bağlantısı (https://...)', 'url']]
   function settingsView() {
     var vals = Object.assign({}, S.data.settings), grid = h('div', { class: 'adm-grid' })
     SETTING_FIELDS.forEach(function (f) {
       var el = h('input', { type: f[2], value: vals[f[0]] || '' })
       el.addEventListener('input', function () { vals[f[0]] = el.value.trim(); markDirty() })
-      grid.appendChild(field(f[1], el, f[0] === 'address'))
+      grid.appendChild(field(f[1], el, f[0] === 'address' || f[0].indexOf('band_') === 0))
     })
     return h('section', { class: 'adm-card wide' },
       h('div', { class: 'adm-rowbar' }, h('button', { class: 'adm-btn primary', onclick: function () {

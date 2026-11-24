@@ -46,7 +46,7 @@ tarayıcıdan doğrudan Supabase ile konuşur.
 - **Görseller**: yükle; blog kapağı, proje ve galeri alanlarında "Görsel seç" ile kullan.
 - **Mesajlar**: iletişim formundan gelenler burada listelenir.
 - **Ayarlar**: telefon, e-posta, adres ve sosyal medya bağlantıları (boş bıraktığın sosyal simge sitede gizlenir).
-- **Projeler → Hill Villas Kalkan → Logo**: logonu yükle (şeffaf PNG önerilir), kartın ortasında görünür.
+- **Projeler**: her projede isteğe bağlı **Logo** alanı vardır (şeffaf PNG önerilir, kartın ortasında görünür).
 
 ## İletişim formu (e-posta)
 Form iki yere gönderir: (1) **kerem.aydn555@gmail.com**'a e-posta (FormSubmit.co üzerinden), (2) veritabanındaki **Mesajlar**.

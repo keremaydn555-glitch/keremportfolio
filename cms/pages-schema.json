@@ -1,0 +1,222 @@
+{
+ "pages": [
+  {
+   "id": "home",
+   "label": "Anasayfa",
+   "fields": [
+    {
+     "key": "hero_intro",
+     "label": "Karşılama yazısı (kurdun solu)",
+     "selector": ".hero .hero-intro",
+     "multiline": false,
+     "tr": "3D modelleme, görsel tasarım ve kodu tek bir dijital deneyimde bir araya getiriyorum.",
+     "en": "Bringing 3D modeling, visual design and code together in one digital experience."
+    },
+    {
+     "key": "about_title",
+     "label": "Hakkımda bölümü başlığı",
+     "selector": ".intro-copy h2",
+     "multiline": true,
+     "tr": "Kod ve tasarımın\nkesiştiği yerde.",
+     "en": "Where code and\ndesign meet."
+    },
+    {
+     "key": "about_text",
+     "label": "Hakkımda bölümü yazısı",
+     "selector": ".intro-copy > p:not(.eyebrow)",
+     "multiline": false,
+     "tr": "Samsunluyum, Antalya’da yaşıyorum ve Akdeniz Üniversitesi’nde Bilgisayar Programcılığı okuyorum. Görsel tasarımı kodla buluşturup sade, zarif ve işe yarayan işler üretmeyi seviyorum.",
+     "en": "I’m from Samsun, based in Antalya, and studying Computer Programming at Akdeniz University. I love bringing visual design and code together to create work that feels simple, elegant and useful."
+    },
+    {
+     "key": "projects_title",
+     "label": "Projeler bölümü başlığı",
+     "selector": ".work-section:not(.gallery-home) .section-heading h2",
+     "multiline": false,
+     "tr": "Seçilmiş işler",
+     "en": "Selected work"
+    },
+    {
+     "key": "projects_intro",
+     "label": "Projeler bölümü açıklaması",
+     "selector": ".work-section:not(.gallery-home) .section-description",
+     "multiline": false,
+     "tr": "Fikirden son dokunuşa, detayları önemseyerek.",
+     "en": "From the first idea to the final detail."
+    },
+    {
+     "key": "gallery_intro",
+     "label": "Galeri bölümü açıklaması",
+     "selector": ".gallery-home .section-description",
+     "multiline": false,
+     "tr": "Beni en çok yansıttığını düşündüğüm fotoğraflar ve kısa notları.",
+     "en": "The photographs that reflect me the most, with a few short notes."
+    },
+    {
+     "key": "cta_title",
+     "label": "İletişim çağrısı başlığı",
+     "selector": ".contact-cta h2",
+     "multiline": false,
+     "tr": "Bir fikrin mi var?",
+     "en": "Have an idea?"
+    },
+    {
+     "key": "cta_text",
+     "label": "İletişim çağrısı yazısı",
+     "selector": ".contact-cta p:not(.eyebrow)",
+     "multiline": false,
+     "tr": "Birlikte güzel bir şey üretelim.",
+     "en": "Let’s make something thoughtful together."
+    }
+   ]
+  },
+  {
+   "id": "about",
+   "label": "Hakkımda",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Sayfa başlığı",
+     "selector": ".page-hero h1",
+     "multiline": false,
+     "tr": "Merhaba, ben Kerem.",
+     "en": "Hello, I’m Kerem."
+    },
+    {
+     "key": "intro",
+     "label": "Giriş cümlesi",
+     "selector": ".page-hero p:not(.eyebrow)",
+     "multiline": false,
+     "tr": "Kodun mantığı, tasarımın duygusu.",
+     "en": "The logic of code, the feeling of design."
+    },
+    {
+     "key": "bio_title",
+     "label": "Özgeçmiş başlığı",
+     "selector": ".about-bio h2",
+     "multiline": false,
+     "tr": "Sade, zarif ve işe yarar.",
+     "en": "Simple, thoughtful, useful."
+    },
+    {
+     "key": "bio_text",
+     "label": "Özgeçmiş yazısı",
+     "selector": ".about-bio > p:not(.eyebrow)",
+     "multiline": false,
+     "tr": "Samsunluyum, şu an Antalya’da yaşıyor ve Akdeniz Üniversitesi Teknik Bilimler MYO’da Bilgisayar Programcılığı okuyorum. Kod yazmayı ve görsel tasarımı bir araya getirmeyi seviyorum. Kendi illüstrasyon ve dijital düzenleme çalışmalarımı geliştiriyorum. Pratik ve çözüm üreten biriyim; sade, zarif ve işe yarayan şeyler yapmaya çalışırım. Geçmişte beyzbol oynadım; sahadan aldığım disiplin ve takım ruhu, işlerime de yansıyor.",
+     "en": "I’m from Samsun, currently living in Antalya and studying Computer Programming at Akdeniz University Vocational School of Technical Sciences. I enjoy combining code with visual design. I develop my own illustration and digital-editing projects. I’m practical and solution-oriented, aiming for work that is simple, elegant and useful. I used to play baseball, and the discipline and team spirit I gained on the field carry over into my work."
+    }
+   ]
+  },
+  {
+   "id": "skills",
+   "label": "Yetenekler",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Sayfa başlığı",
+     "selector": ".page-hero h1",
+     "multiline": false,
+     "tr": "Yetenekler",
+     "en": "Skills"
+    }
+   ]
+  },
+  {
+   "id": "projects",
+   "label": "Projeler",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Sayfa başlığı",
+     "selector": ".page-hero h1",
+     "multiline": false,
+     "tr": "Projeler",
+     "en": "Projects"
+    },
+    {
+     "key": "intro",
+     "label": "Giriş cümlesi",
+     "selector": ".page-hero p:not(.eyebrow)",
+     "multiline": false,
+     "tr": "Farklı ihtiyaçlar, ortak bir yaklaşım: iyi düşünülmüş detaylar.",
+     "en": "Different needs, one shared approach: thoughtful details."
+    }
+   ]
+  },
+  {
+   "id": "gallery",
+   "label": "Galeri",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Sayfa başlığı",
+     "selector": ".page-hero h1",
+     "multiline": false,
+     "tr": "Galeri",
+     "en": "Gallery"
+    },
+    {
+     "key": "intro",
+     "label": "Giriş cümlesi",
+     "selector": ".page-hero p:not(.eyebrow)",
+     "multiline": false,
+     "tr": "Beni en çok yansıttığını düşündüğüm fotoğraflar ve kısa notları.",
+     "en": "The photographs that reflect me the most, with a few short notes."
+    }
+   ]
+  },
+  {
+   "id": "blog",
+   "label": "Blog",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Sayfa başlığı",
+     "selector": ".page-hero h1",
+     "multiline": false,
+     "tr": "Blog",
+     "en": "Journal"
+    },
+    {
+     "key": "intro",
+     "label": "Giriş cümlesi",
+     "selector": ".page-hero p:not(.eyebrow)",
+     "multiline": false,
+     "tr": "Öğrendiklerim, denediklerim ve üretirken aklımda kalanlar.",
+     "en": "Things I learn, try and remember while making."
+    }
+   ]
+  },
+  {
+   "id": "contact",
+   "label": "İletişim",
+   "fields": [
+    {
+     "key": "title",
+     "label": "Sayfa başlığı",
+     "selector": ".page-hero h1",
+     "multiline": false,
+     "tr": "İletişim",
+     "en": "Contact"
+    },
+    {
+     "key": "intro",
+     "label": "Giriş cümlesi",
+     "selector": ".page-hero p:not(.eyebrow)",
+     "multiline": false,
+     "tr": "Bir proje, iş birliği ya da sadece merhaba demek için yazabilirsin.",
+     "en": "Reach out about a project, a collaboration, or simply to say hello."
+    },
+    {
+     "key": "form_title",
+     "label": "Form başlığı",
+     "selector": ".contact-form h2",
+     "multiline": false,
+     "tr": "Mesajını gönder",
+     "en": "Send a message"
+    }
+   ]
+  }
+ ]
+}
